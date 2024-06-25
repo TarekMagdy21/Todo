@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState, AppDispatch } from '../store/store';
-import { addTodo, updateTodo, deleteTodo } from '../store/slice/todoSlice';
-import { TodoType } from '../types/todo';
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState, AppDispatch } from "../store/store";
+import { addTodo, updateTodo, deleteTodo } from "../store/slice/todoSlice";
+import { TodoType } from "../types/todo";
 
 export default function Todo() {
   const dispatch: AppDispatch = useDispatch();
@@ -23,11 +23,13 @@ export default function Todo() {
           if (currentTodo === "" || currentTodo.trim().length === 0) {
             alert("Please add a title for the todo");
           } else {
-            dispatch(addTodo({
-              id: data.length + 1,
-              title: currentTodo,
-              status: "Todo",
-            }));
+            dispatch(
+              addTodo({
+                id: data.length + 1,
+                title: currentTodo,
+                status: "Todo",
+              })
+            );
             setCurrentTodo("");
           }
         }}
@@ -36,14 +38,19 @@ export default function Todo() {
       </button>
       <div className="flex flex-col items-start justify-start gap-6">
         {data.map((item: TodoType) => (
-          <div key={item.id} className="flex items-center justify-between w-full gap-5">
+          <div
+            key={item.id}
+            className="flex items-center justify-between w-full gap-5"
+          >
             <p className="p-2 border-2 rounded-lg">Todo: {item.title}</p>
             <p
               onClick={() => {
-                dispatch(updateTodo({
-                  id: item.id,
-                  status: item.status === "Todo" ? "Completed" : "Todo",
-                }));
+                dispatch(
+                  updateTodo({
+                    id: item.id,
+                    status: item.status === "Todo" ? "Completed" : "Todo",
+                  })
+                );
               }}
               className={`p-2 border-2 rounded-lg ${
                 item.status === "Todo"

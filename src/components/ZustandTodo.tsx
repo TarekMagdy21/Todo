@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { useTodoStore } from '../zustand/useTodoStore';
-import { TodoType } from '../types/todo';
+import { useState } from "react";
+import { useTodoStore } from "../zustand/useTodoStore";
+import { TodoType } from "../types/todo";
 
 export default function ZustandTodo() {
   const { todos, addTodo, updateTodo, deleteTodo } = useTodoStore();
@@ -33,7 +33,10 @@ export default function ZustandTodo() {
       </button>
       <div className="flex flex-col items-start justify-start gap-6">
         {todos.map((item: TodoType, index) => (
-          <div key={item.id} className="flex items-center justify-between w-full gap-5">
+          <div
+            key={item.id}
+            className="flex items-center justify-between w-full gap-5"
+          >
             <p className="p-2 border-2 rounded-lg">Todo: {item.title}</p>
             <p
               onClick={() => {
