@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { TodoType } from "../types/todo";
+import { useTranslation } from "react-i18next";
 
 export default function Todo() {
+  const { t, i18n } = useTranslation();
   const [data, setData] = useState<TodoType[] | undefined>(() => {
     const savedData = localStorage.getItem("todo");
     return savedData ? (JSON.parse(savedData) as TodoType[]) : [];
@@ -14,7 +16,8 @@ export default function Todo() {
 
   return (
     <div className="flex flex-col items-center justify-center mt-10">
-      <h1>Todo List</h1>
+      <h1>{t("todo.title")}</h1>
+
       <input
         className="px-4 border-2 border-blue-500 rounded-2xl"
         type="text"
@@ -26,7 +29,11 @@ export default function Todo() {
       <button
         onClick={() => {
           if (currentTodo === "" || currentTodo.trim()?.length === 0) {
-            alert("Please add a title for the todo");
+            alert(
+              i18n.language === "ar"
+                ? "من فضلك اضف عنوان للمهمه"
+                : "Please add a title for the todo"
+            );
           } else {
             setData([
               ...data!,
@@ -36,15 +43,24 @@ export default function Todo() {
           }
         }}
       >
-        Add Todo
+        {t("todo.button")}
       </button>
       <div className="flex flex-col items-start justify-start gap-6">
         {data?.map((item: TodoType, index) => (
-          <div
+          <div  
             key={item.id}
-            className="flex items-center justify-between w-full gap-5"
+            className={`flex ${
+              i18n.language === "ar" ? "flex-row-reverse" : ""
+            } items-center justify-between w-full gap-5`}
           >
-            <p className="p-2 border-2 rounded-lg ">Todo: {item.title}</p>
+            <div
+              className={`p-2 border-2 rounded-lg flex ${
+                i18n.language === "ar" ? "flex-row-reverse" : ""
+              }`}
+            >
+              <p>{i18n.language === "ar" ? ":مهمه" : "Todo:"}</p>
+              <p className=" "> {item.title}</p>
+            </div>
             <p
               onClick={() => {
                 const changedStatus = [...data];
@@ -59,7 +75,11 @@ export default function Todo() {
                   : "text-green-500"
               }`}
             >
-              {item.status}
+              {i18n.language === "ar"
+                ? item.status === "Todo"
+                  ? "سوف يتم بدأه"
+                  : "تم الانتهاء"
+                : item.status}
             </p>
             <button
               className="text-red-500"
