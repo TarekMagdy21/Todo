@@ -47,7 +47,7 @@ export default function Todo() {
       </button>
       <div className="flex flex-col items-start justify-start gap-6">
         {data?.map((item: TodoType, index) => (
-          <div  
+          <div
             key={item.id}
             className={`flex ${
               i18n.language === "ar" ? "flex-row-reverse" : ""
@@ -59,7 +59,7 @@ export default function Todo() {
               }`}
             >
               <p>{i18n.language === "ar" ? ":مهمه" : "Todo:"}</p>
-              <p className=" "> {item.title}</p>
+              <p className=""> {item.title}</p>
             </div>
             <p
               onClick={() => {

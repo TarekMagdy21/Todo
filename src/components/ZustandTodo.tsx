@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 export default function ZustandTodo() {
   const { todos, addTodo, updateTodo, deleteTodo } = useTodoStore();
   const [currentTodo, setCurrentTodo] = useState("");
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   return (
     <div className="flex flex-col items-center justify-center mt-10">
       <h1>{t("todo.title")}</h1>
@@ -36,9 +36,18 @@ export default function ZustandTodo() {
         {todos.map((item: TodoType, index) => (
           <div
             key={item.id}
-            className="flex items-center justify-between w-full gap-5"
+            className={`flex ${
+              i18n.language === "ar" ? "flex-row-reverse" : ""
+            } items-center justify-between w-full gap-5`}
           >
-            <p className="p-2 border-2 rounded-lg">Todo: {item.title}</p>
+            <div
+              className={`p-2 border-2 rounded-lg flex ${
+                i18n.language === "ar" ? "flex-row-reverse" : ""
+              }`}
+            >
+              <p>{i18n.language === "ar" ? ":مهمه" : "Todo:"}</p>
+              <p className=""> {item.title}</p>
+            </div>{" "}
             <p
               onClick={() => {
                 const updatedTodos = [...todos];
@@ -53,7 +62,11 @@ export default function ZustandTodo() {
                   : "text-green-500"
               }`}
             >
-              {item.status}
+              {i18n.language === "ar"
+                ? item.status === "Todo"
+                  ? "سوف يتم بدأه"
+                  : "تم الانتهاء"
+                : item.status}{" "}
             </p>
             <button
               className="text-red-500"
